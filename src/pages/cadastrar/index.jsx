@@ -3,7 +3,7 @@ import CustomInput from "@/components/CustomInput";
 import CustomSelect from "@/components/CustomSelect";
 import PageWrapper from "@/components/PageWrapper";
 import { useState } from "react";
-
+import {toast} from "react-toastify";
 export default function Cadastrar(){
     const [titulo, setTitulo] = useState("");
     const [diretor, setDiretor] = useState("");
@@ -13,8 +13,14 @@ export default function Cadastrar(){
     const [sinopse, setSinopse] = useState("");
     const [banner, setBanner] = useState("");
 
+
     async function handleSubmit(event){
         event.preventDefault();
+        if(!titulo || !diretor || !genero || !nota || !sinopse || !banner){
+            toast.error("Preencha todos os campos!")
+            return;
+        }
+            
         try {
             await instance.post("/api/movies", {
                 titulo: titulo,
